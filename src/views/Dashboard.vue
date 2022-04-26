@@ -321,9 +321,9 @@
             </div>  
         </hc-modal>
 
-        <section id="pruebaCarrusel">
+        <!-- <section id="pruebaCarrusel">
              <hc-carousel v-if="data_table" :table="data_table" :cantidad="7"></hc-carousel>
-        </section>
+        </section> -->
 </div>
 </template>
 
