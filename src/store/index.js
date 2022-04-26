@@ -28,13 +28,15 @@ export default new Vuex.Store({
 		getSession: state => {
 			let sesion = localStorage.getItem('HISPANO@session')
 			sesion = JSON.parse(sesion)
-
+			state.sesion
+			//console.log("getSessionalor de la sesión "+sesion)
 			return sesion
 		},
 		getAlert: (state) => {
 			return state.alert
 		},
 		getLoad: (state) => {
+			//console.log(state.loading)
 			return state.loading
 		}
 	},
@@ -66,7 +68,7 @@ export default new Vuex.Store({
 			current_sesion = JSON.parse(current_sesion)
 			
 			current_sesion.authorization_id = new_authorization_id
-			console.log(current_sesion, 'current_sesion')
+			//console.log(current_sesion, 'current_sesion')
 			localStorage.setItem('HISPANO@session', JSON.stringify(current_sesion))
 		},
 		setAlert: (state, new_alert) => {

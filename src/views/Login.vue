@@ -117,11 +117,8 @@
                     </div>
                 </div>
             </div>
-        </section>
-       
-
-        
-  	</div>
+        </section>   
+</div>
 </template>
 
 <script>
@@ -135,6 +132,7 @@
     
 	// jQuery
     import $ from 'jquery'
+    var  CONFIG = require('../page.config.js')
     
 	export default {
 		name: 'hc_home',
@@ -161,7 +159,7 @@
             changeType() {
                 this.type = (this.type == 'text') ? 'password' : 'text'
             },
-        	redirect(name_route) {
+        redirect(name_route) {
                 if(this.current_route_name !== name_route ) {
                     window.scrollTo(0, 0)
 

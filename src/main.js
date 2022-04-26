@@ -6,15 +6,20 @@ global.CONFIG = require('./page.config.js')
 
 import { BootstrapVue, IconsPlugin, BootstrapVueIcons } from 'bootstrap-vue'
 
+
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import SsrCarousel from 'vue-ssr-carousel'
 import ssrCarouselCss from 'vue-ssr-carousel/index.css'
+import CustomCss from './css/custom.css'
+
 
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue)
 Vue.component('ssr-carousel',SsrCarousel)
+//Vue.component('slide-fast',Slide)
 Vue.component(ssrCarouselCss)
+Vue.use(CustomCss)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 // Icons
