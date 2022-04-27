@@ -124,8 +124,9 @@
                                             <div class="slide">
                                             <img src="https://slp.gob.mx/irc/Noticias/predial.png" class="asd">
                                             </div>
-                                            <div class="slide">
-                                            <img src="https://i0.wp.com/geniusitt.com/wp-content/uploads/2019/10/sky-logo.png?ssl=1" class="asd">
+                                            <div class="slide" @click="getPayService()">
+                                            <input type="hidden" ref="groupId"  value="SKY000">
+                                            <img src="https://i0.wp.com/geniusitt.com/wp-content/uploads/2019/10/sky-logo.png?ssl=1" ref="groupImg" class="asd">
                                             </div>
                                             <div class="slide">
                                             <img src="https://logoeps.com/wp-content/uploads/2012/04/telcel-logo-vector-01.png" class="asd">
@@ -167,7 +168,7 @@
                                     </div>
                         </div>
 
-                        <div class="col-12 col-md-6 px-0 px-sm-1">
+                        <div class="col-12 col-md-6 px-0 px-sm-1" v-if="!isService">
                             <div class="row d-flex justify-content-end align-items-center">
                                 <div class="col-12 py-3">
                                     <span class="hc--description-sm">
@@ -192,6 +193,34 @@
                                         </div>
                                     </div>
                                     <input id="input_1" v-model="amount" type="" name="" class="input full-width" style="padding-left: 30px;">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-12 col-md-6 px-0 px-sm-1" v-if="isService">
+                            <div class="row d-flex justify-content-end align-items-center">
+                                <div class="col-12 py-3">
+                                    <span class="hc--description-sm">
+                                        Número de referencia:
+                                    </span>
+                                    <input v-model="reference_service" type="" name="" class="input full-width">
+                                </div>
+                                <div class="col-12 py-3">
+                                    <span class="hc--description-sm">
+                                        Monto a pagar:
+                                    </span> <br>
+                                    <div id="input_target_2" class="d-inline-block position-absolute" style="padding: 11px 10px;">
+                                        <div class="d-flex justify-content-center align-items-center w-100 h-100">
+                                            <span class="hc--description-sm">$</span>
+                                        </div>
+                                    </div>
+                                    <input id="input_2" v-model="amount_service" type="" name="" class="input full-width" style="padding-left: 30px;">
+                                </div>
+                                <div class="col-12 d-flex justify-content-end align-items-start py-3">
+                                    <button @click="payService()" class="btn btn-success">
+                                        PAGAR
+                                    </button>
                                 </div>
                             </div>
 
@@ -321,9 +350,9 @@
             </div>  
         </hc-modal>
 
-        <!-- <section id="pruebaCarrusel">
+        <section id="pruebaCarrusel">
              <hc-carousel v-if="data_table" :table="data_table" :cantidad="7"></hc-carousel>
-        </section> -->
+        </section>
 </div>
 </template>
 
@@ -340,7 +369,7 @@
     import s2_img2 from '../assets/images/dashboard/cerrar-sesion.png'
     import s2_img3 from '../assets/images/dashboard/historial-pagos.png'
     import s2_img4 from '../assets/images/dashboard/tarjertas.png'
-    import s3_img5 from '../assets/images/paymentServices/section3/logo-programa.png'
+    //import s3_img5 from '../assets/images/paymentServices/section3/logo-programa.png'
     import sm_img1 from '../assets/images/modal/pabs-logo-blanco.png'
 
 	// Gifs
@@ -366,13 +395,16 @@
                 s2_img3,
                 s2_img4,
                 sm_img1,
-                s3_img5,
+                s3_img5: require('../assets/images/paymentServices/section3/logo-programa.png'),
                 data_table: [],
 
                 currency: 'USD',
 
                 reference: null,//'93002474785791',
+                reference_service:null,
                 amount: null,
+                amount_service:null,
+                isService:false,
                 reference_payment_data: null,
                 show_modal: false,
                 modal_state: null,
@@ -522,6 +554,97 @@
 
             },
 
+            getPayService(){
+                console.log(this.$refs.groupId.value)
+                this.s3_img5 = this.$refs.groupImg.src
+                this.isService = true
+            },
+            async payService() {
+
+                // if(this.amount_service == null || !this.amount_service > 0) {
+                //     _Store.commit('setAlert', {
+                //         open: true,
+                //         message: 'Debes ingresar un monto a pagar valido',
+                //         variant: 'danger'
+                //     })
+                //     return
+                // }else if(this.reference_service == null) {
+                //     _Store.commit('setAlert', {
+                //         open: true,
+                //         message: 'Debes ingresar una referencia para proceder al pago',
+                //         variant: 'danger'
+                //     })
+                //     return
+                // }
+                //  var params = {
+                //     'key': `${CONFIG.server[CONFIG.env].get_services.api_key}`,
+                //     'nip': `${CONFIG.server[CONFIG.env].get_services.api_nip}`,
+                //     'producto': this.$refs.groupId.value,
+                //     'referencia': this.reference_service,
+                //     'monto': this.amount_service
+                // }
+
+                // var formBody = []
+                // for (var property in params) {
+                // var encodedKey = encodeURIComponent(property)
+                // var encodedValue = encodeURIComponent(params[property])
+                // formBody.push(encodedKey + "=" + encodedValue)
+                // }
+                // formBody = formBody.join("&")
+                
+                // console.log(formBody)
+                // fetch(`${CONFIG.server[CONFIG.env].get_services.url_taecel}`, {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/x-www-form-urlencoded'
+                //     },
+                //     body: formBody
+                //     })
+                //     .then(res => res.json() )
+                //     .catch(err => { console.error(err) })
+                //     .then(async response => {
+                //     console.log('Success:', response['success'])
+                //         if(response['success'] == false && response['error'] == 405 ) {
+                //             _Store.commit('setAlert', {
+                //                 open: true,
+                //                 message: response['message'],
+                //                 variant: 'danger'
+                //             })
+
+                //         } else if(response['error'] == 3148  && response['success'] == false){
+                //             var mensaje = response['message'].replace('Carrier','servicio')
+                //              _Store.commit('setAlert', {
+                //                 open: true,
+                //                 message: mensaje,
+                //                 variant: 'danger'
+                //             })
+                //         }else{
+                            this.modal_state = 'success'
+                            this.show_modal = true
+                        //}
+
+                        
+                        // else if(response['detail'] !== undefined) {
+                        //     if(response['detail'] == 'LOGIN_BAD_CREDENTIALS') {
+                        //         _Store.commit('setAlert', {
+                        //             open: true,
+                        //             message: 'Usuario o contraseña incorrecto',
+                        //             variant: 'danger'
+                        //         })
+                        //     }
+                        // }
+                        // else {
+                        //     _Store.commit('setAlert', {
+                        //         open: true,
+                        //         message: 'Ha ocurrido un error intente más tarde'
+                        //     })
+                        // }
+
+                        // _Store.commit('setLoad', {
+                        //     show: false,
+                        // })
+                    //})
+            },
             redirectToPage(url, target = "_blank") {
                 if(target == "_blank") {
                     window.open(url, '_blank')
